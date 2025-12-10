@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Rock Paper Scissors | Premium Game</title>
+    <link rel="stylesheet" href="../shared/design-system.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon would go here -->
+</head>
+<body>
+    <main class="game-container glass-panel">
+        <header>
+            <h1 class="glow-text">Rock Paper Scissors</h1>
+            <p class="subtitle">Beat the AI in this futuristic showdown</p>
+        </header>
+
+        <section class="score-board glass-panel">
+            <div class="score-item">
+                <span class="label">Wins</span>
+                <span class="value js-wins">0</span>
+            </div>
+            <div class="score-item">
+                <span class="label">Losses</span>
+                <span class="value js-losses">0</span>
+            </div>
+            <div class="score-item">
+                <span class="label">Ties</span>
+                <span class="value js-ties">0</span>
+            </div>
+        </section>
+
+        <div class="result-display">
+            <div class="js-result result-text">Choose your weapon!</div>
+            <div class="js-moves move-display"></div>
+        </div>
+
+        <div class="choices-grid">
+            <button class="choice-btn js-rock-button">
+                <div class="icon-wrapper">
+                    <img src="assets/rock-emoji.png" alt="Rock">
+                </div>
+                <span>Rock</span>
+            </button>
+            <button class="choice-btn js-paper-button">
+                <div class="icon-wrapper">
+                    <img src="assets/paper-emoji.png" alt="Paper">
+                </div>
+                <span>Paper</span>
+            </button>
+            <button class="choice-btn js-scissors-button">
+                <div class="icon-wrapper">
+                    <img src="assets/scissors-emoji.png" alt="Scissors">
+                </div>
+                <span>Scissors</span>
+            </button>
+        </div>
+
+        <div class="controls">
+            <button class="neon-btn js-reset-score-button">Reset Score</button>
+            <button class="neon-btn js-auto-play-button">Auto Play</button>
+        </div>
+
+        <div class="js-div confirmation-modal"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
