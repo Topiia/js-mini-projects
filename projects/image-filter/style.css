@@ -1,0 +1,126 @@
+/* Filter Studio Styles */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.studio-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.workspace {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.preview-area {
+    flex: 2;
+    background: #000;
+    min-height: 400px;
+    border-radius: 12px;
+    border: 2px dashed var(--glass-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.preview-area:hover {
+    border-color: var(--neon-blue);
+}
+
+.preview-area img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+}
+
+.placeholder {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+#fileInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.controls-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.controls-area.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.preset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.preset-btn {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-btn:hover {
+    background: var(--neon-purple);
+    border-color: var(--neon-purple);
+}
+
+.sliders label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 15px;
+    accent-color: var(--neon-blue);
+}
+
+.full-width {
+    width: 100%;
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .workspace {
+        flex-direction: column;
+    }
+
+    .preview-area {
+        min-height: 300px;
+    }
+}
