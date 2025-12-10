@@ -1,0 +1,87 @@
+/* Neon Quotes Styles */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.quote-container {
+    width: 100%;
+    max-width: 700px;
+    padding: 50px;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.quote-box {
+    position: relative;
+    margin: 40px 0;
+}
+
+.quote-icon {
+    font-size: 5rem;
+    color: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    font-family: serif;
+    line-height: 1;
+}
+
+.quote-icon.left {
+    top: -30px;
+    left: -20px;
+}
+
+.quote-icon.right {
+    bottom: -50px;
+    right: -20px;
+}
+
+.quote-text {
+    font-size: 1.8rem;
+    line-height: 1.5;
+    font-weight: 300;
+    font-style: italic;
+    min-height: 100px;
+    transition: opacity 0.5s ease;
+}
+
+.author {
+    font-size: 1.2rem;
+    color: var(--neon-blue);
+    margin-bottom: 40px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.small {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.outline {
+    background: transparent;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+}
+
+.outline:hover {
+    background: var(--neon-blue);
+    color: black;
+}
+
+@media (max-width: 600px) {
+    .quote-text {
+        font-size: 1.4rem;
+    }
+
+    .quote-container {
+        padding: 30px;
+    }
+}
