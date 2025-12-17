@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Todo List | Stay Organized</title>
+    <link rel="stylesheet" href="../shared/design-system.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="todo-container glass-panel">
+        <header>
+            <h1 class="glow-text">Task Master</h1>
+            <p class="subtitle">Focus on what matters</p>
+        </header>
+
+        <section class="input-group">
+            <input type="text" class="neon-input js-name-input" placeholder="What needs to be done?" />
+            <input type="date" class="neon-input js-due-date-input" />
+            <button class="neon-btn js-add-todo-button">Add</button>
+        </section>
+
+        <section class="todo-list-wrapper">
+            <div class="list-header">
+                <span>Task</span>
+                <span>Due Date</span>
+                <span>Actions</span>
+            </div>
+            <div class="js-todo-list todo-list-content">
+                <!-- Javascript will populate this -->
+            </div>
+        </section>
+
+        <div class="controls">
+            <button class="text-btn js-clear-all"
+                style="color: var(--neon-pink); font-size: 0.8rem; background: none; border: none; cursor: pointer; text-decoration: underline;">Clear
+                All Tasks</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

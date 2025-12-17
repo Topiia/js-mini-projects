@@ -1,0 +1,239 @@
+
+      //Git=Track changes in our Code
+      //lets suppose i have done some mistake in an code while editing the code 
+      //i want to undo all the changes
+      //how would i do that? 
+      //ans:- this is where Git comes in by tracking changes in our code
+      //if i have gir set up in my project i can easliy undo the chnages which i have done while editing the code
+      
+      //repository = a folder where changes are being tracked
+      //we need to configure the username and email with git
+      //(dont worry, this info is not used anywhere online)
+
+      //How to save changes in git
+      //just type a message at top ==> Add the starting files
+
+      //Main idea for javascript 
+      //1.save the data
+      //2.generate the HTML
+      //3.Make it interactive
+
+      //data=information(information about our project in this case)
+      //we need to take this product data and save it into js to use it
+      //in const products we need to create something that closely matchs the data
+      //in this case we have a list of products thus we create array
+      //array = represents a list. now each product in a list have many value a like a image name price
+      //now for this we gonna use an object  to represent each product 
+// object{..}==> lets us group multiple values together
+
+//js has problems doing math with floats ==> 0.1+0.2 = 0.300000000004
+//best practice when calculating money: calculate in cents; 1$ = 100cents
+
+//so one thing to remember while creating objects is that in each of the object we have the same properties with the same structure so that code handle each product the same 
+//so this how we save something as data in js and this is also called as *data structure* ==> it structure or organizes the data => usually we use the combination of object and array to create a data structure in js 
+
+//step 2 now to generate the html manually
+//to generate the html we can loop through this array and for each of this product we gonna create some html
+//how foreach loop work in our case is that it takes each object safe that in the loop parameter and then runs this function 
+//so we just generated the html in our js but each time we want different information for different product how we are going to do that==> we are goint the replace the things that changes with image poperty that we had created in our products array
+//so now we are going to insert the property image in the string of src
+//so now the html we are generating  we are actually inserting detail about each product
+//now the next ==> combine this HTML together into one string and -put it on to the webpage
+//to combine all html together lets create a variable for combining all the string together
+//each time we go to the loop we add this html string up at new variable created 
+//put this combine html into the webpage using the dom 
+
+//after done with work of generating html with js we pass comment to git that Generating html with javascript
+
+//benefit of generating HTML with js is that if we want to add another products we don't have to copy all the html code again all we need to do is that add data to new product in the array object 
+
+//so basically we have two js files loaded 1st run the product.js ==> to create the array and amazon.js ==> to generate the html
+//SCRIPT ELEMENT ARE LOADED ONE BY ONE AND THE ORDER MATTERS
+
+//real world website created we don't write all the html manually instead by saving the data for the website in the data structure manner and then use js to generate the data
+//and by each work done just type the message in the git like for this one we have typed as use products.js files
+
+
+//last step is to make it interactive
+//now add an eventListiner to this button add to cart
+//now when we click one of this button product should be added into the cart 
+//now we need to figure it out how to do it
+//if we think about the cart a cart is basically just a list and inside the list we have a product image name quantity 
+//we can actually represent it in our js by ==> const cart = [
+{ product: '',
+  quantity: 
+},
+{ product: '',
+  quantity: 
+}
+] use something like this to represent our code
+//for everything cleaner lets actually separate the cart into its own file
+//each file will focus on one particular thing
+//after clicking a button how that product info added to cart
+//how do we know which product to add??
+//to solve this here comes new feature call as DATA ATTRIBUT html feature 
+//Data attribute :- is just another HTML attribute
+--allows us to attach any information to an element 
+
+//syntax rule for data attribute
+--is just an HTML attribute
+attribute name = "${attribute value}"
+data-product-name="${product.name}"
+data- <== this is constant and then we can any thing we want (use kebab-case)
+//dataset property basically give us all the data attribute that are attach to it
+
+//we want one tshirt product with quantity of more than one ??
+//steps 1. check if the product is already is in the cart
+2. if it is in the cart,increase the quantity 
+3. if not inthe cart add it to cart
+
+//it is not good to use the product name in e commerce website buz ==> we might actually have 2 product with the same name 
+//to fix this:
+-give each product an ID
+-this id should be unique 
+
+//now we are going to make cart button interactive
+//steps ==> 1. calculate the quantity 
+2. put that quantity on the page  
+
+//to calculate the total quantity ==> quantity is in the cart array of objects ==> loop through this array and add the quantity together
+
+//mow put the added quantity in the web page using DOM
+
+
+//Modules
+a better way to organize our code
+example right now we are using three script tags to run all of our JavaScript ---> this is basically the same thing that combining all the files together into one big file and then running all of our code ===> this will be a problem using scripts tags that is it can cause NAMING CONFLICTS
+module basically contain a variable inside a file 
+
+
+ex:- we created variable cart in cart.js so we cant use variable name  cart in any other files 
+in big projects its very common of naming conflicts 
+<script src="data/cart.js"></script> removing this will remove the below 3
+1. run all the code inside cart.js 
+2. create a cart variable 
+3. cause a naming conflict
+
+how to create a module 
+1. create a file 
+and write a code inside a file
+2. don't load a file with script
+by doing this
+any variable we created inside a file will be contained inside a file
+
+//how to get a variable out of a file
+1.add type="module" attribute
+ <script type="module" src="scripts/amazon.js"></script>  
+2. export
+ export const cart = [];
+3. import
+ import {cart} from '../data/cart.js'; ==> here .. means to get out of the current folder
+
+type="module" attribute
+basically this file get variable out of other files. 
+//important in order to module work we need to open our file with live server it wont work without it.
+//benefit --> 
+1. HELP us AVOID naming conflicts 
+2. to avoid the 1 one
+   import {cart as myCart} from '../data/cart.js';
+   const cart = [];
+3. dont need to worry about the order while loading a file 
+
+modules = better way to organize our code
+
+after doing this for cart we did same for product.js file 
+but we still neeed one script for load and that is amazon.js in that we have all the rest of the imported js files and this amazon.js file is called as entry point
+
+//best practice is to group related code together into its own file
+//we can import multiple things from a file 
+
+import has another syntax 
+import * as cartModule from '../data/cart.js';
+this import everything from a file and group them together and we can access is import as a property or as method like
+cartModule.cart
+cartModule.addToCart('id');
+
+now we are going to create checkout page using module
+
+how cart button works 
+uses a link element 
+<a href="https://youtube.com">...</a>
+
+now in checkout.html insted of writing all of this manually we going to generate our html in js
+1. add js this checkout.html page
+
+//de-duplicating the data or Normalizing the data 
+by using the unique id for each product we dont need to save the data in others files or other place it just store in one place by using the id we can get the access to the rest of the information 
+
+we created a new files utils = utility 
+this files contains the code which does the same work 
+import { formatCurrency } from './utils/money.js';
+here single dot means current folder
+
+//radio selector
+<input type="radio" name="name1">
+if we have the same name for all the radio selector them only can be selected between them
+
+//delete link
+1. remove the product form the cart
+2.update the html --> remove the product from the page
+
+when we click delete how do we know which product we need to remove from the cart
+product id comes in role by using data attribute 
+
+instead of writing the code in the checkout.js we are going to write the code or create the function in the cart.js---> cuz cart.js should contain all the code related to cart
+
+steps to remove the product by id
+1. create a new array 
+2. loop through the cart
+3.add each product to the new array except for this productid
+
+as now when we need to reassign the variable by our own we need to give that variable as let 
+remember that we are not reassign the value we are reassigning the variable 
+
+ 2. update the html==>
+1. use the dom to get the element to remove
+2. use .remove() method 
+every element that we get from a dom has a method called .remove();
+
+how do we know which element to get? from the page
+go look for the html for that product by inspect element 
+to indentify this product add a special class to this product thia class will contain the productid
+
+external libraries = code that is outside of our project
+so basically this is nothing but using someone else code using internet
+
+generally external libraries script tag comes at first  
+its lets use share code 
+
+so use loaded external libraries dayjs which give us an object for current time day date etc
+
+now lets use 
+external libraries and js modules together 
+loading the external libraries us8ing the script tag 
+the problem with script tag is that it runs the code directly on the page this can cause naming conflict 
+the better way to load external libraries is to use js modules 
+modules contain the code inside a file.js 
+any variable created inside the file will not conflict the name outside the file 
+
+to use extrenal libraries and js modules together we are going to use special version that is called as ESMmodules version 
+ESM = ECMAScript Module
+ECMAScript = javascript
+ESM version 
+a version that works with js modules 
+
+default export 
+another way to exporting 
+we can use it when we only want to export 1 thing 
+named export is the normal way of exporting with {} 
+
+
+ 
+
+
+
+
+
+
+
+
