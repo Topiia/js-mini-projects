@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Weather App – Complete System Flow</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #141414, #000);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, sans-serif;
+        }
+
+        svg {
+            max-width: 1300px;
+        }
+
+        /* ===== NODES ===== */
+        .box {
+            fill: #111;
+            stroke: #444;
+            stroke-width: 2;
+            rx: 10;
+        }
+
+        .label {
+            fill: #ffffff;
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        /* ===== PATHS ===== */
+        .path {
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .control {
+            stroke: #8bc34a;
+            stroke-dasharray: 6 4;
+        }
+
+        .request {
+            stroke: #00e5ff;
+        }
+
+        .response {
+            stroke: #ff9800;
+        }
+
+        .error {
+            stroke: #f44336;
+            stroke-dasharray: 4 6;
+        }
+
+        /* ===== ANIMATION ===== */
+        .request-flow {
+            stroke-dasharray: 6 14;
+            animation: dash-forward 2.4s linear infinite;
+        }
+
+        .response-flow {
+            stroke-dasharray: 6 14;
+            animation: dash-backward 2.4s linear infinite;
+        }
+
+        @keyframes dash-forward {
+            to {
+                stroke-dashoffset: -40;
+            }
+        }
+
+        @keyframes dash-backward {
+            to {
+                stroke-dashoffset: 40;
+            }
+        }
+
+        /* ===== TEXT ===== */
+        .flow-text {
+            fill: #ffffff;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .flow-text-muted {
+            fill: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+        }
+
+        /* ===== LEGEND ===== */
+        .legend text {
+            fill: #ffffff;
+            font-size: 12px;
+        }
+
+        .legend-dot {
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.25;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.25;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <svg viewBox="0 0 1300 650">
+
+        <!-- ===== ARROWS ===== -->
+        <defs>
+            <marker id="arrow-control" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#8bc34a" />
+            </marker>
+
+            <marker id="arrow-request" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#00e5ff" />
+            </marker>
+
+            <marker id="arrow-response" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#ff9800" />
+            </marker>
+
+            <marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#f44336" />
+            </marker>
+        </defs>
+
+        <!-- ===== ACTORS ===== -->
+        <rect x="40" y="300" width="140" height="80" class="box" />
+        <text x="110" y="340" class="label">User</text>
+
+        <rect x="240" y="250" width="240" height="180" class="box" />
+        <text x="360" y="340" class="label">Browser / UI</text>
+
+        <rect x="560" y="200" width="300" height="180" class="box" />
+        <text x="710" y="290" class="label">JavaScript Engine</text>
+
+        <rect x="560" y="420" width="300" height="100" class="box" />
+        <text x="710" y="470" class="label">Theme Engine</text>
+
+        <rect x="920" y="300" width="240" height="80" class="box" />
+        <text x="1040" y="340" class="label">OpenWeatherMap API</text>
+
+        <!-- ===== CONTROL FLOW ===== -->
+        <path d="M180 340 L240 340" class="path control" marker-end="url(#arrow-control)" />
+        <text x="210" y="325" class="flow-text-muted">UI Event</text>
+
+        <!-- UI → JS REQUEST -->
+        <path d="M480 340 L560 290" class="path request request-flow" marker-end="url(#arrow-request)" />
+        <text x="520" y="310" class="flow-text">City Name</text>
+
+        <!-- JS → API REQUEST -->
+        <path d="M860 340 L920 340" class="path request request-flow" marker-end="url(#arrow-request)" />
+        <text x="890" y="325" class="flow-text">GET /weather?q=city</text>
+
+        <!-- API → JS RESPONSE -->
+        <path d="M920 370 L860 370" class="path response response-flow" marker-end="url(#arrow-response)" />
+        <text x="890" y="390" class="flow-text">Weather JSON</text>
+
+        <!-- JS → UI RENDER -->
+        <path d="M560 370 L480 370" class="path response response-flow" marker-end="url(#arrow-response)" />
+        <text x="520" y="390" class="flow-text">Rendered Weather Data</text>
+
+        <!-- JS → THEME ENGINE -->
+        <path d="M710 380 L710 420" class="path control" marker-end="url(#arrow-control)" />
+        <text x="720" y="405" class="flow-text-muted">Evaluate Temp / Condition</text>
+
+        <!-- THEME → UI -->
+        <path d="M560 470 L480 470" class="path response response-flow" marker-end="url(#arrow-response)" />
+        <text x="520" y="490" class="flow-text">CSS Class (.rain / .hot)</text>
+
+        <!-- ERROR PATH -->
+        <path d="M860 340 L860 600 L360 600" class="path error" marker-end="url(#arrow-error)" />
+        <text x="600" y="620" class="flow-text">404 / Network / Invalid Key</text>
+
+        <!-- ===== LEGEND ===== -->
+        <g class="legend" transform="translate(60,80)">
+            <circle cx="0" cy="0" r="5" fill="#8bc34a" class="legend-dot" />
+            <text x="14" y="4">Control Flow</text>
+
+            <circle cx="0" cy="24" r="5" fill="#00e5ff" class="legend-dot" />
+            <text x="14" y="28">Request Data</text>
+
+            <circle cx="0" cy="48" r="5" fill="#ff9800" class="legend-dot" />
+            <text x="14" y="52">Response Data</text>
+
+            <circle cx="0" cy="72" r="5" fill="#f44336" class="legend-dot" />
+            <text x="14" y="76">Error Path</text>
+        </g>
+
+    </svg>
+
+</body>
+
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Movie Info App – Complete Alive System Flow (Corrected)</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #141414, #000);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, sans-serif;
+        }
+
+        svg {
+            max-width: 1200px;
+        }
+
+        .box {
+            fill: #111;
+            stroke: #444;
+            stroke-width: 2;
+            rx: 10;
+        }
+
+        .label {
+            fill: #ffffff;
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        .path {
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .control {
+            stroke: #8bc34a;
+            stroke-dasharray: 6 4;
+        }
+
+        .request {
+            stroke: #00e5ff;
+        }
+
+        .response {
+            stroke: #ff9800;
+        }
+
+        .error {
+            stroke: #f44336;
+            stroke-dasharray: 4 6;
+        }
+
+        .request-flow {
+            stroke-dasharray: 6 14;
+            animation: dash-forward 2.2s linear infinite;
+        }
+
+        .response-flow {
+            stroke-dasharray: 6 14;
+            animation: dash-backward 2.2s linear infinite;
+        }
+
+        .loop-slow {
+            animation-duration: 3.6s;
+        }
+
+        @keyframes dash-forward {
+            to {
+                stroke-dashoffset: -40;
+            }
+        }
+
+        @keyframes dash-backward {
+            to {
+                stroke-dashoffset: 40;
+            }
+        }
+
+        .flow-text {
+            fill: #ffffff;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .flow-text-muted {
+            fill: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+        }
+
+        .legend text {
+            fill: #ffffff;
+            font-size: 12px;
+        }
+
+        .legend-dot {
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.25;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.25;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <svg viewBox="0 0 1200 600">
+
+        <defs>
+            <marker id="arrow-control" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#8bc34a" />
+            </marker>
+
+            <marker id="arrow-request" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#00e5ff" />
+            </marker>
+
+            <marker id="arrow-response" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#ff9800" />
+            </marker>
+
+            <marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#f44336" />
+            </marker>
+        </defs>
+
+        <!-- ACTORS -->
+        <rect x="40" y="260" width="140" height="80" class="box" />
+        <text x="110" y="300" class="label">User</text>
+
+        <rect x="240" y="210" width="240" height="180" class="box" />
+        <text x="360" y="300" class="label">Browser / UI</text>
+
+        <rect x="560" y="210" width="280" height="180" class="box" />
+        <text x="700" y="300" class="label">JavaScript Engine</text>
+
+        <rect x="920" y="260" width="180" height="80" class="box" />
+        <text x="1010" y="300" class="label">TMDB API</text>
+
+        <!-- CONTROL -->
+        <path d="M180 300 L240 300" class="path control" marker-end="url(#arrow-control)" />
+        <text x="210" y="285" class="flow-text-muted">UI Event</text>
+
+        <!-- UI → JS REQUEST (CORRECTED TO BLUE) -->
+        <path d="M480 300 L560 300" class="path request request-flow" marker-end="url(#arrow-request)" />
+        <text x="520" y="285" class="flow-text">Movie ID / Search Input</text>
+
+        <!-- JS → API REQUEST -->
+        <path d="M840 300 L920 300" class="path request request-flow" marker-end="url(#arrow-request)" />
+        <text x="880" y="285" class="flow-text">GET /movie, /search</text>
+
+        <!-- API → JS RESPONSE -->
+        <path d="M920 330 L840 330" class="path response response-flow" marker-end="url(#arrow-response)" />
+        <text x="880" y="350" class="flow-text">Movie JSON</text>
+
+        <!-- JS → UI RENDER -->
+        <path d="M560 330 L480 330" class="path response response-flow" marker-end="url(#arrow-response)" />
+        <text x="520" y="350" class="flow-text">Rendered HTML / UI State</text>
+
+        <!-- SEARCH LOOP -->
+        <path d="M360 210 C 360 80, 700 80, 700 210" class="path request request-flow loop-slow"
+            marker-end="url(#arrow-request)" />
+        <text x="530" y="95" class="flow-text">Search Query</text>
+
+        <!-- MODAL LOOP -->
+        <path d="M360 390 C 360 550, 700 550, 700 390" class="path request request-flow loop-slow"
+            marker-end="url(#arrow-request)" />
+        <text x="530" y="485" class="flow-text">Movie Details</text>
+
+        <!-- ERROR -->
+        <path d="M840 300 L840 560 L360 560" class="path error" marker-end="url(#arrow-error)" />
+        <text x="600" y="580" class="flow-text">Error / Empty Result</text>
+
+        <!-- LEGEND -->
+        <g class="legend" transform="translate(60,90)">
+            <circle cx="0" cy="0" r="5" fill="#8bc34a" class="legend-dot" />
+            <text x="14" y="4">Control Flow</text>
+
+            <circle cx="0" cy="24" r="5" fill="#00e5ff" class="legend-dot" />
+            <text x="14" y="28">Request Data</text>
+
+            <circle cx="0" cy="48" r="5" fill="#ff9800" class="legend-dot" />
+            <text x="14" y="52">Response Data</text>
+
+            <circle cx="0" cy="72" r="5" fill="#f44336" class="legend-dot" />
+            <text x="14" y="76">Error Path</text>
+        </g>
+
+    </svg>
+
+</body>
+
+</html>
