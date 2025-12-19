@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Weather App – Complete System Flow</title>
+    <title>Weather App – System Flow V2 (Angled + Above)</title>
 
     <style>
         body {
@@ -15,19 +15,14 @@
             align-items: center;
             font-family: system-ui, sans-serif;
         }
+        svg { max-width: 1400px; }
 
-        svg {
-            max-width: 1300px;
-        }
-
-        /* ===== NODES ===== */
         .box {
             fill: #111;
             stroke: #444;
             stroke-width: 2;
             rx: 10;
         }
-
         .label {
             fill: #ffffff;
             font-size: 14px;
@@ -35,183 +30,145 @@
             dominant-baseline: middle;
         }
 
-        /* ===== PATHS ===== */
-        .path {
-            fill: none;
-            stroke-width: 2;
-        }
+        .path { fill: none; stroke-width: 2; }
+        .control { stroke: #8bc34a; stroke-dasharray: 6 4; }
+        .request { stroke: #00e5ff; }
+        .response { stroke: #ff9800; }
+        .error { stroke: #f44336; stroke-dasharray: 4 6; }
 
-        .control {
-            stroke: #8bc34a;
-            stroke-dasharray: 6 4;
-        }
+        .request-flow { stroke-dasharray: 6 14; animation: dash-forward 2.4s linear infinite; }
+        .response-flow { stroke-dasharray: 6 14; animation: dash-backward 2.4s linear infinite; }
 
-        .request {
-            stroke: #00e5ff;
-        }
+        @keyframes dash-forward { to { stroke-dashoffset: -40; } }
+        @keyframes dash-backward { to { stroke-dashoffset: 40; } }
 
-        .response {
-            stroke: #ff9800;
-        }
-
-        .error {
-            stroke: #f44336;
-            stroke-dasharray: 4 6;
-        }
-
-        /* ===== ANIMATION ===== */
-        .request-flow {
-            stroke-dasharray: 6 14;
-            animation: dash-forward 2.4s linear infinite;
-        }
-
-        .response-flow {
-            stroke-dasharray: 6 14;
-            animation: dash-backward 2.4s linear infinite;
-        }
-
-        @keyframes dash-forward {
-            to {
-                stroke-dashoffset: -40;
-            }
-        }
-
-        @keyframes dash-backward {
-            to {
-                stroke-dashoffset: 40;
-            }
-        }
-
-        /* ===== TEXT ===== */
-        .flow-text {
-            fill: #ffffff;
-            font-size: 12px;
-            pointer-events: none;
-        }
-
-        .flow-text-muted {
-            fill: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-        }
-
-        /* ===== LEGEND ===== */
-        .legend text {
-            fill: #ffffff;
-            font-size: 12px;
-        }
-
-        .legend-dot {
-            animation: pulse 1.6s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 0.25;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.25;
-            }
-        }
+        .flow-text { fill: #ffffff; font-size: 12px; pointer-events: none; }
+        .flow-text-muted { fill: rgba(255,255,255,0.7); font-size: 11px; }
     </style>
 </head>
 
 <body>
 
-    <svg viewBox="0 0 1300 650">
+<svg viewBox="0 0 1500 750">
 
-        <!-- ===== ARROWS ===== -->
-        <defs>
-            <marker id="arrow-control" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
-                orient="auto-start-reverse">
-                <path d="M0 0 L10 5 L0 10 Z" fill="#8bc34a" />
-            </marker>
+<defs>
+<marker id="arrow-control" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 Z" fill="#8bc34a"/>
+</marker>
 
-            <marker id="arrow-request" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
-                orient="auto">
-                <path d="M0 0 L10 5 L0 10 Z" fill="#00e5ff" />
-            </marker>
+<marker id="arrow-request" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto">
+    <path d="M0 0 L10 5 L0 10 Z" fill="#00e5ff"/>
+</marker>
 
-            <marker id="arrow-response" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
-                orient="auto">
-                <path d="M0 0 L10 5 L0 10 Z" fill="#ff9800" />
-            </marker>
+<marker id="arrow-response" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto">
+    <path d="M0 0 L10 5 L0 10 Z" fill="#ff9800"/>
+</marker>
 
-            <marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
-                orient="auto">
-                <path d="M0 0 L10 5 L0 10 Z" fill="#f44336" />
-            </marker>
-        </defs>
+<marker id="arrow-error" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto">
+    <path d="M0 0 L10 5 L0 10 Z" fill="#f44336"/>
+</marker>
 
-        <!-- ===== ACTORS ===== -->
-        <rect x="40" y="300" width="140" height="80" class="box" />
-        <text x="110" y="340" class="label">User</text>
+</defs>
 
-        <rect x="240" y="250" width="240" height="180" class="box" />
-        <text x="360" y="340" class="label">Browser / UI</text>
+<!-- BOXES -->
+<rect x="40" y="300" width="140" height="80" class="box"/>
+<text x="110" y="340" class="label">User</text>
 
-        <rect x="560" y="200" width="300" height="180" class="box" />
-        <text x="710" y="290" class="label">JavaScript Engine</text>
+<rect x="240" y="250" width="240" height="180" class="box"/>
+<text x="360" y="340" class="label">Browser / UI</text>
 
-        <rect x="560" y="420" width="300" height="100" class="box" />
-        <text x="710" y="470" class="label">Theme Engine</text>
+<rect x="560" y="200" width="300" height="180" class="box"/>
+<text x="710" y="290" class="label">JavaScript Engine</text>
 
-        <rect x="920" y="300" width="240" height="80" class="box" />
-        <text x="1040" y="340" class="label">OpenWeatherMap API</text>
+<rect x="560" y="420" width="300" height="100" class="box"/>
+<text x="710" y="470" class="label">Data &amp; Condition Parser</text>
 
-        <!-- ===== CONTROL FLOW ===== -->
-        <path d="M180 340 L240 340" class="path control" marker-end="url(#arrow-control)" />
-        <text x="210" y="325" class="flow-text-muted">UI Event</text>
+<rect x="920" y="200" width="240" height="80" class="box"/>
+<text x="1040" y="240" class="label">OpenWeatherMap API</text>
 
-        <!-- UI → JS REQUEST -->
-        <path d="M480 340 L560 290" class="path request request-flow" marker-end="url(#arrow-request)" />
-        <text x="520" y="310" class="flow-text">City Name</text>
+<rect x="920" y="300" width="240" height="80" class="box"/>
+<text x="1040" y="340" class="label">Responsive BG Engine</text>
 
-        <!-- JS → API REQUEST -->
-        <path d="M860 340 L920 340" class="path request request-flow" marker-end="url(#arrow-request)" />
-        <text x="890" y="325" class="flow-text">GET /weather?q=city</text>
+<rect x="920" y="420" width="240" height="80" class="box"/>
+<text x="1040" y="460" class="label">Button Theme Engine</text>
 
-        <!-- API → JS RESPONSE -->
-        <path d="M920 370 L860 370" class="path response response-flow" marker-end="url(#arrow-response)" />
-        <text x="890" y="390" class="flow-text">Weather JSON</text>
+<!-- CONTROL FLOW -->
+<path d="M180 340 L240 340" class="path control" marker-end="url(#arrow-control)"/>
+<text x="210" y="325" class="flow-text-muted">UI Event</text>
 
-        <!-- JS → UI RENDER -->
-        <path d="M560 370 L480 370" class="path response response-flow" marker-end="url(#arrow-response)" />
-        <text x="520" y="390" class="flow-text">Rendered Weather Data</text>
+<path d="M480 340 L560 290" class="path request request-flow" marker-end="url(#arrow-request)"/>
+<text x="520" y="310" class="flow-text">City Name</text>
 
-        <!-- JS → THEME ENGINE -->
-        <path d="M710 380 L710 420" class="path control" marker-end="url(#arrow-control)" />
-        <text x="720" y="405" class="flow-text-muted">Evaluate Temp / Condition</text>
+<!-- API -->
+<path d="M860 240 L920 240" class="path request request-flow" marker-end="url(#arrow-request)"/>
+<text x="890" y="225" class="flow-text">GET /weather</text>
 
-        <!-- THEME → UI -->
-        <path d="M560 470 L480 470" class="path response response-flow" marker-end="url(#arrow-response)" />
-        <text x="520" y="490" class="flow-text">CSS Class (.rain / .hot)</text>
+<path d="M920 280 L860 280" class="path response response-flow" marker-end="url(#arrow-response)"/>
+<text x="890" y="300" class="flow-text">Weather JSON</text>
 
-        <!-- ERROR PATH -->
-        <path d="M860 340 L860 600 L360 600" class="path error" marker-end="url(#arrow-error)" />
-        <text x="600" y="620" class="flow-text">404 / Network / Invalid Key</text>
+<!-- PARSER -->
+<path d="M710 380 L710 420" class="path control" marker-end="url(#arrow-control)"/>
+<text x="720" y="405" class="flow-text-muted">Parse</text>
 
-        <!-- ===== LEGEND ===== -->
-        <g class="legend" transform="translate(60,80)">
-            <circle cx="0" cy="0" r="5" fill="#8bc34a" class="legend-dot" />
-            <text x="14" y="4">Control Flow</text>
+<!-- BG Select -->
+<path d="M860 420 L920 340" class="path control" marker-end="url(#arrow-control)"/>
+<text x="890" y="395" class="flow-text-muted">BG Select</text>
 
-            <circle cx="0" cy="24" r="5" fill="#00e5ff" class="legend-dot" />
-            <text x="14" y="28">Request Data</text>
+<!-- Button -->
+<path d="M860 470 L920 460" class="path control" marker-end="url(#arrow-control)"/>
+<text x="890" y="485" class="flow-text-muted">Button Theme</text>
 
-            <circle cx="0" cy="48" r="5" fill="#ff9800" class="legend-dot" />
-            <text x="14" y="52">Response Data</text>
+<!-- RESPONSE ABOVE -->
+<!-- BG Applied -->
+<path 
+  d="M1160 340 
+     L1320 340        
+     L1320 150         
+     L320 150         
+     L320 250"        
+  class="path response response-flow" 
+  marker-end="url(#arrow-response)"
+/>
 
-            <circle cx="0" cy="72" r="5" fill="#f44336" class="legend-dot" />
-            <text x="14" y="76">Error Path</text>
-        </g>
+<text x="700" y="140" class="flow-text">BG Applied</text>
 
-    </svg>
+
+
+<!-- Button Theme Applied -->
+<path 
+  d="M1160 460
+     L1300 460        
+     L1300 180        
+     L370 180         
+     L370 250"        
+  class="path response response-flow" 
+  marker-end="url(#arrow-response)"
+/>
+
+<text x="700" y="175" class="flow-text">Button Theme Applied</text>
+
+
+
+<!-- ERROR -->
+<path d="M860 240 L860 650 L360 650" class="path error" marker-end="url(#arrow-error)"/>
+<text x="600" y="670" class="flow-text">404 / Invalid Key / Network Error</text>
+
+<!-- LEGEND -->
+<g class="legend" transform="translate(60,80)">
+    <circle cx="0" cy="0" r="5" fill="#8bc34a"/>
+    <text x="14" y="4"  fill="#8bc34a">Control Flow</text>
+
+    <circle cx="0" cy="24" r="5" fill="#00e5ff"/>
+    <text x="14" y="28" fill="#00e5ff">Request Data</text>
+
+    <circle cx="0" cy="48" r="5" fill="#ff9800"/>
+    <text x="14" y="52" fill="#ff9800">Response Data</text>
+
+    <circle cx="0" cy="72" r="5" fill="#f44336"/>
+    <text x="14" y="76" fill="#f44336">Error Path</text>
+</g>
+
+</svg>
 
 </body>
-
 </html>

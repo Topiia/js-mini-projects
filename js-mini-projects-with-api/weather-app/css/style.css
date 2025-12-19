@@ -2,53 +2,76 @@
    GLOBAL ROOT VARIABLES
 ------------------------------------------------------- */
 :root {
+    /* Base Color Tokens */
     --neon-blue: #00eaff;
-    --input-bg: rgba(255, 255, 255, 0.05);
+    --neon-accent: #00eaff;
+    --input-bg: rgba(0, 0, 0, 0.4);
     --input-border: rgba(0, 255, 255, 0.3);
-    --btn-bg: #00eaff;
-    --btn-text: #000;
+
+    /* Search Button Tokens (Main targets for dynamic updates) */
+    --search-btn-glow: rgba(0, 234, 255, 0.3);
+    --search-btn-border: var(--neon-blue);
+    --search-btn-bg: rgba(0, 234, 255, 0.05);
+    --search-btn-color: var(--neon-blue);
+    --search-btn-hover-bg: var(--neon-blue);
+    --search-btn-hover-color: #000;
 
     --text-main: #ffffff;
     --text-muted: #d9d9d9;
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --card-bg: rgba(0, 0, 0, 0.45);
 }
 
 /* -------------------------------------------------------
-   WEATHER THEME COLOR OVERRIDES
+   THEMATIC SEARCH BUTTON OVERRIDES
 ------------------------------------------------------- */
-body.warm {
-    background-image: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-    --neon-blue: #ff6fb1;
-    --input-border: rgba(255, 111, 177, 0.4);
-    --btn-bg: #ff6fb1;
+
+/* Sunny / Clear - Golden Accents */
+body.theme-sunny_clear {
+    --search-btn-glow: rgba(255, 204, 51, 0.4);
+    --search-btn-border: #ffcc33;
+    --search-btn-color: #ffcc33;
+    --search-btn-hover-bg: #ffcc33;
 }
 
-body.hot {
-    background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-    --neon-blue: #ff8c42;
-    --input-border: rgba(255, 140, 66, 0.4);
-    --btn-bg: #ff8c42;
+/* Rain / Thunderstorm - Deep Blue Accents */
+body.theme-rain_thunderstorm {
+    --search-btn-glow: rgba(74, 192, 255, 0.4);
+    --search-btn-border: #4ac0ff;
+    --search-btn-color: #4ac0ff;
+    --search-btn-hover-bg: #4ac0ff;
 }
 
-body.cool {
-    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-    --neon-blue: #00d4ff;
-    --input-border: rgba(0, 212, 255, 0.4);
-    --btn-bg: #00d4ff;
+/* Snow / Winter - Frosty White Accents */
+body.theme-snow_winter {
+    --search-btn-glow: rgba(255, 255, 255, 0.4);
+    --search-btn-border: #ffffff;
+    --search-btn-color: #ffffff;
+    --search-btn-hover-bg: #ffffff;
 }
 
-body.cold {
-    background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
-    --neon-blue: #b26bff;
-    --input-border: rgba(178, 107, 255, 0.4);
-    --btn-bg: #b26bff;
+/* Fog / Mist - Muted Grey Accents */
+body.theme-fog_mist {
+    --search-btn-glow: rgba(201, 214, 255, 0.3);
+    --search-btn-border: #c9d6ff;
+    --search-btn-color: #c9d6ff;
+    --search-btn-hover-bg: #c9d6ff;
 }
 
-body.rain {
-    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
-    --neon-blue: #4ac0ff;
-    --input-border: rgba(74, 192, 255, 0.4);
-    --btn-bg: #4ac0ff;
+/* Cloudy / Overcast - Cool Steel Accents */
+body.theme-cloudy_overcast {
+    --search-btn-glow: rgba(176, 196, 222, 0.3);
+    --search-btn-border: #b0c4de;
+    --search-btn-color: #b0c4de;
+    --search-btn-hover-bg: #b0c4de;
+}
+
+/* Night / Clear - Electric Purple Accents */
+body.theme-night_clear {
+    --search-btn-glow: rgba(188, 19, 254, 0.4);
+    --search-btn-border: #bc13fe;
+    --search-btn-color: #bc13fe;
+    --search-btn-hover-bg: #bc13fe;
 }
 
 /* -------------------------------------------------------
@@ -59,9 +82,15 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    transition: background-image 1s ease;
     color: var(--text-main);
     font-family: "Poppins", sans-serif;
+
+    /* Background integration */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-image 0.8s ease-in-out;
 }
 
 /* -------------------------------------------------------
@@ -118,52 +147,56 @@ body {
 }
 
 /* Insane Neon Button */
-.neon-btn {
+/* Refactored Search Button */
+.search-btn {
     position: relative;
-    background: rgba(0, 243, 255, 0.05);
-    border: 1px solid var(--neon-blue);
-    color: var(--neon-blue);
-    padding: 12px 30px;
+    background: var(--search-btn-bg);
+    border: 1px solid var(--search-btn-border);
+    color: var(--search-btn-color);
+    padding: 12px 25px;
     border-radius: 8px;
     cursor: pointer;
     font-family: 'Outfit', sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 15px var(--search-btn-glow);
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.neon-btn::before {
+.search-btn::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 0%;
     height: 100%;
-    background: var(--neon-blue);
+    background: var(--search-btn-hover-bg);
     transition: width 0.3s ease;
     z-index: -1;
     transform: skewX(-15deg);
     transform-origin: left;
 }
 
-.neon-btn:hover::before {
+.search-btn:hover::before {
     width: 150%;
 }
 
-.neon-btn:hover {
-    color: #000;
+.search-btn:hover {
+    color: var(--search-btn-hover-color);
     box-shadow:
-        0 0 30px var(--neon-blue),
-        0 0 60px var(--neon-blue);
+        0 0 25px var(--search-btn-border),
+        0 0 45px var(--search-btn-glow);
     border-color: transparent;
     transform: scale(1.05);
 }
 
-.neon-btn:active {
+.search-btn:active {
     transform: scale(0.95);
 }
 
@@ -224,6 +257,7 @@ body {
     font-weight: 700;
     background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 

@@ -71,21 +71,12 @@ function updateUI(data) {
     document.getElementById('sunrise').textContent = sunrise;
     document.getElementById('sunset').textContent = sunset;
 
-    updateTheme(data.main.temp, data.weather[0].main);
+    const isNight = data.weather[0].icon.endsWith('n');
+    updateTheme(data.main.temp, data.weather[0].main, isNight);
 }
 
-function updateTheme(temp, condition) {
-    document.body.className = ''; // Reset
-
-    if (condition.toLowerCase().includes('rain')) {
-        document.body.classList.add('rain');
-    } else if (temp <= 10) {
-        document.body.classList.add('cold');
-    } else if (temp <= 20) {
-        document.body.classList.add('cool');
-    } else if (temp <= 30) {
-        document.body.classList.add('warm');
-    } else {
-        document.body.classList.add('hot');
+function updateTheme(temp, condition, isNight) {
+    if (window.BackgroundEngine) {
+        window.BackgroundEngine.update(condition, isNight);
     }
 }
